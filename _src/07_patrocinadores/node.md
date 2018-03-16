@@ -14,7 +14,10 @@ limit: 0
             <h2>{{ type }}</h2>
         </div>
         <div class="patreons-icons" flex="100" layout="row" layout-wrap layout-padding layout-align="center center">
-            <div flex="100" flex-gt-sm="50" flex-gt-md="25" class="column centered" ng-repeat="patreon in patreons">
+            <div ng-if="type == 'Empresas Colaboradoras'" flex="100" flex-gt-sm="50" flex-gt-md="20" class="column centered" ng-repeat="patreon in patreons">
+                <a href="{{ patreon.link }}"><img alt="{{ patreon.name }}" src="/img/patreons/{{ patreon.name | slugify }}.png"></a>
+            </div>
+            <div ng-if="type != 'Empresas Colaboradoras'" flex="100" flex-gt-sm="50" flex-gt-md="25" class="column centered" ng-repeat="patreon in patreons">
                 <a href="{{ patreon.link }}"><img alt="{{ patreon.name }}" src="/img/patreons/{{ patreon.name | slugify }}.png"></a>
             </div>
         </div>
