@@ -2,7 +2,7 @@ app.directive('appHeader', function () {
 
     var template = '';
 
-    var logo = '<img src="img/logo.png">';
+    var logo = '<img style="height: 12em;" src="img/logo.png">';
     logo = '<a href="#!/{{ lang() }}/">' + logo + '</a>';
     logo = '<div layout="column" layout-margin>' + logo + '</div>';
 
