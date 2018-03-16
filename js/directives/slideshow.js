@@ -1,7 +1,7 @@
 app.directive('appSlideshow', function () {
 
     var template = '' +
-       '<div layout="row"><h2>destacados</h2></div>' +
+       // '<div layout="row"><h2>destacados</h2></div>' +
        '<div ng-controller="slideshowCtrl">' +
            '<slick adaptiveHeight="true" infinite="true" dots="false" arrows="false" data="elements()" init-onload="true" autoplay="true">' +
                '<div class="orbit-slider" ng-repeat="item in elements()">' +

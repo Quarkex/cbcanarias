@@ -1,6 +1,6 @@
 app.directive('appSocialMedia', function () {
 
-    var template = '<h2>Redes</h2>' +
+    var template = '' + //'<h2>Redes</h2>' +
     '<div flex="100" layout="column" layout-gt-md="row" layout-wrap>' +
         '<div flex="100" flex-gt-md="33">' +
             '<iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" allowfullscreen="true" class="twitter-timeline twitter-timeline-rendered" style="position: static; visibility: visible; display: inline-block; width: 100%; height: 355px; padding: 0px; border: medium none; max-width: 100%; min-width: 180px; margin-top: 0px; margin-bottom: 0px; min-height: 200px;" data-widget-id="profile:CB1939Canarias" title="Twitter Timeline" frameborder="0"></iframe> <script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>' +
