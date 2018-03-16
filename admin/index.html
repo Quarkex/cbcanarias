@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="{{ lang() }}" ng-init="title='C.B. Canarias - Administración';" ng-app="mainApp" ng-controller="mainCtrl as ctrl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+
+        <meta name="fragment" content="!">
+
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <script src="https://use.fontawesome.com/5d9ccb4393.js"></script>
+
+
+        <link rel="stylesheet" href="/style.min.css">
+        <title>C.B. Canarias - Administración</title>
+
+        <script type="text/javascript" src="/bower_components/core.js/client/core.min.js"></script>
+
+        <!-- Angular requires Angular.js Libraries -->
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript">window.appDependencies = [];</script>
+        <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngRoute");</script>
+        <script type="text/javascript" src="/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngResource");</script>
+        <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngAnimate");</script>
+        <script type="text/javascript" src="/bower_components/angular-aria/angular-aria.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngAria");</script>
+        <script type="text/javascript" src="/bower_components/angular-messages/angular-messages.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngMessages");</script>
+        <link   rel="stylesheet"      href="/bower_components/angular-material/angular-material.min.css">
+        <script type="text/javascript" src="/bower_components/angular-material/angular-material.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ngMaterial");</script>
+        <!-- FIXME Bower angular foundation  package presents some kind of problem. Using custom files -->
+        <script type="text/javascript" src="/js/angular-foundation.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("mm.foundation");</script>
+        <script type="text/javascript" src="/js/pmkr-filters.js"></script>
+        <script type="text/javascript">window.appDependencies.push("pmkr.filters");</script>
+        <script type="text/javascript" src="/js/slick.js"></script>
+        <script type="text/javascript" src="/js/angular-slick.js"></script>
+        <script type="text/javascript">window.appDependencies.push("slick");</script>
+        <script type="text/javascript" src="/bower_components/angular-ckeditor/angular-ckeditor.min.js"></script>
+        <script src="/js/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript">window.appDependencies.push("ckeditor");</script>
+        <script type="text/javascript" src="/bower_components/angular-slugify/angular-slugify.js"></script>
+        <script type="text/javascript">window.appDependencies.push("slugifier");</script>
+        <script type="text/javascript" src="/bower_components/angular-dynamic-locale/dist/tmhDynamicLocale.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("tmh.dynamicLocale");</script>
+        <script type="text/javascript" src="/bower_components/angular-bind-html-compile/angular-bind-html-compile.min.js"></script>
+        <script type="text/javascript">window.appDependencies.push("angular-bind-html-compile");</script>
+        <script type="text/javascript">window.app = angular.module("mainApp", appDependencies);</script>
+
+        <script type="text/javascript" src="/admin/tree.js"></script>
+
+        <script type="text/javascript" src="/js/appValues.js"></script>
+        <script type="text/javascript" src="/js/appFilters.js"></script>
+        <script type="text/javascript" src="/js/appService.language.js"></script>
+        <script type="text/javascript" src="/js/appService.resourcePaginator.js"></script>
+        <script type="text/javascript" src="/js/appService.navigator.js"></script>
+        <script type="text/javascript" src="/js/appConfig.js"></script>
+        <script type="text/javascript" src="/js/appCtrl.main.js"></script>
+        <script type="text/javascript" src="/js/appCtrl.extra.js"></script>
+
+        <script type="text/javascript" src="/js/directives/titlebar.js"></script>
+        <script type="text/javascript" src="/js/directives/sliding-banner.js"></script>
+        <script type="text/javascript" src="/js/directives/footer.js"></script>
+        <script type="text/javascript" src="/js/directives/language-selector.js"></script>
+        <script type="text/javascript" src="/js/directives/loading-overlay.js"></script>
+        <script type="text/javascript" src="/js/directives/off-canvas-nav.js"></script>
+        <script type="text/javascript" src="/js/directives/off-canvas.js"></script>
+        <script type="text/javascript" src="/js/directives/breadcrumbs.js"></script>
+        <script type="text/javascript" src="/js/directives/header.js"></script>
+        <script type="text/javascript" src="/js/directives/bottom-extra.js"></script>
+        <script type="text/javascript" src="/js/directives/bottom-nav.js"></script>
+        <script type="text/javascript" src="/js/directives/article-showcaser.js"></script>
+        <script type="text/javascript" src="/js/directives/back-bar.js"></script>
+        <script type="text/javascript" src="/js/directives/side-nav.js"></script>
+        <script type="text/javascript" src="/js/directives/tab-bar.js"></script>
+        <script type="text/javascript" src="/js/directives/accordion.js"></script>
+        <script type="text/javascript" src="/js/directives/chessboard-nav.js"></script>
+        <script type="text/javascript" src="/js/directives/elements-feedback.js"></script>
+        <script type="text/javascript" src="/js/directives/related-content.js"></script>
+        <script type="text/javascript" src="/js/directives/paginator-controls.js"></script>
+        <script type="text/javascript" src="/js/directives/paginator-browser.js"></script>
+        <script type="text/javascript" src="/js/directives/card-standard.js"></script>
+        <script type="text/javascript" src="/js/directives/card-simple.js"></script>
+        <script type="text/javascript" src="/js/directives/card-document.js"></script>
+        <script type="text/javascript" src="/js/directives/card-external.js"></script>
+        <script type="text/javascript" src="/js/directives/card-article.js"></script>
+        <script type="text/javascript" src="/js/directives/default-view.js"></script>
+        <script type="text/javascript" src="/js/directives/activity-view.js"></script>
+        <script type="text/javascript" src="/js/directives/article-view.js"></script>
+        <script type="text/javascript" src="/js/directives/article-editor-view.js"></script>
+        <script type="text/javascript" src="/js/directives/team-member-editor-view.js"></script>
+        <script type="text/javascript" src="/js/directives/patreon-editor-view.js"></script>
+        <script type="text/javascript" src="/js/directives/hotel-view.js"></script>
+        <script type="text/javascript" src="/js/directives/descriptive-view.js"></script>
+        <script type="text/javascript" src="/js/directives/documental-view.js"></script>
+        <script type="text/javascript" src="/js/directives/ads-banner.js"></script>
+        <script type="text/javascript" src="/js/directives/patreon-slider.js"></script>
+        <script type="text/javascript" src="/js/directives/poster.js"></script>
+        <script type="text/javascript" src="/js/directives/slideshow.js"></script>
+        <script type="text/javascript" src="/js/directives/social-media.js"></script>
+        <script type="text/javascript" src="/js/directives/gui.js"></script>
+        <script type="text/javascript" src="/js/directives/admin-gui.js"></script>
+    </head>
+    <body class="ng-cloak" flex layout="column">
+
+        <app-loading-overlay logo="'/img/logo.png'" show-if="language_status() == 'loading'"></app-loading-overlay>
+        <div class="angular-animate" ng-show="language_status() == 'ok'" id="app" layout="column" flex>
+            <app-admin-gui ng-controller="resourcePaginatorCtrl" layout="column" flex>
+                <div bind-html-compile="node.content" layout="column" flex></div>
+            </app-admin-gui>
+        </div>
+
+        <script src="/js/app.js"></script>
+
+    </body>
+</html>

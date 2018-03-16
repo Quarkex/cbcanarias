@@ -1,0 +1,196 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+################################################################################
+#                                                                              #
+#  CGI value setter script                                                     #
+#                                                                              #
+#  Expects a JSON body by POST method, or as a string on the first parameter   #
+#  if using it by CLI, with the following parameters:                          #
+#                                                                              #
+#  - collection (required)                                                     #
+#    The mongo collection in which to perform the query                        #
+#                                                                              #
+#  - filters                                                                   #
+#    An array of JSON objects with the filters leading to the elements         #
+#    to update, E.G: an unique ID field.                                       #
+#                                                                              #
+#  - values                                                                    #
+#    The values to update in the objects returned by the filters. Will insert  #
+#    the element if the filter is not found or nil.                            #
+#                                                                              #
+#  If you prefer to use an XLSX file, you may pass the file as the first       #
+#  parameter, and the destination collection as the second parameter.          #
+#  If you fail to provide a collection using this method, it will default to   #
+#  “test” as it is custom with MongoDB.                                        #
+#                                                                              #
+#  The script anwsers with an array of updated results.                        #
+#                                                                              #
+#  If something goes wrong, the output array will contain an object with an    #
+#  error value containing the error message.                                   #
+#                                                                              #
+################################################################################
+
+require 'uri'
+require 'cgi'
+require 'json'
+require 'mongo'
+
+$config = {}
+
+# Default config values
+$config["mongo-ip"]   = "127.0.0.1"
+$config["mongo-port"] = 27017
+$config["mongo-db"]   = "cbcanarias"
+
+configFile = File.expand_path(File.dirname(__FILE__)) + '/../config.json'
+load configFile if File.file? configFile
+
+Mongo::Logger.logger.level = ::Logger::FATAL
+
+client = Mongo::Client.new([ $config['mongo-ip'] + ':' + $config['mongo-port'].to_s ], :database => $config['mongo-db'])
+db = client.database
+
+class Hash
+    def hmap(&block)
+        Hash[self.map {|k, v| block.call(k,v) }]
+    end
+    def hmap!(&block)
+        replace hmap(&block)
+    end
+end
+
+class Object; def ensure_array; [self] end end
+class Array; def ensure_array; to_a end end
+class NilClass; def ensure_array; to_a end end
+
+def parseValue( value )
+    if $parameters.has_key?("escaped_values") then
+        if $parameters["escaped_values"] == true
+            value = value.encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+            value = value.encode!('UTF-8', 'UTF-16')
+            value = Base64.decode64(value)
+            value = URI.unescape(value.force_encoding('UTF-8'))
+        end
+    end
+    case value.to_s
+    when /^[0-9]{14}$/
+        value.gsub!(/^([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})$/, '\1-\2-\3T\4:\5:\6Z')
+        value = "1970-05-01T00:00:00Z" if value == "0000-00-00T00:00:00Z"
+        value = "9999-12-30T00:00:00Z" if value == "9999-99-99T99:99:99Z"
+        value = DateTime.parse(value)
+    when /^-?\d+[,.]?\d*$/
+        value = ( value.to_i == value.to_f ) ? value.to_i : value.to_f
+    when /^[\- 0-9]+;[\- 0-9 ;]+$/
+        value = value.to_s.split(';')
+        value.map! {|x| x.to_i }
+    when /^$/
+        value = nil
+    else
+        value = value.to_s
+    end
+    value
+end
+
+cgi = CGI.new
+output = []
+
+begin
+    puts "Script in CLI mode" if ARGV[0] != nil
+    json = cgi.params.keys.join('&') if cgi.params.keys.first != nil
+    json = json + '=' + cgi.params[cgi.params.keys.first].join if cgi.params[cgi.params.keys.first] != ''
+    json = ARGV[0] if ARGV[0] != nil
+
+    # If json is an xlsx file...
+    if json[-5, 5] == ".xlsx" then
+        puts "Will try to load an xlsx" if ARGV[0] != nil
+
+        language = json[-7, 2] # last two characters before extension are considered a lang code
+        puts "Guessed lang code: " + language if ARGV[0] != nil
+
+        $parameters = { "collection" => ARGV[1] != nil ? ARGV[1] : 'test', "filters" => [], "values" => [] }
+
+        require 'roo'
+        file = Roo::Spreadsheet.open(ARGV[0])
+        file = Roo::Excelx.new(ARGV[0])
+
+        file.default_sheet = file.sheets[0]
+
+        file.each_with_pagename do |name, sheet|
+            sheet.each_with_index() do |values, index|
+
+                row = index + 1
+                if row != 1 then # First row is for headers
+                    doc = { "IDIOMA" => language }
+                    values.each_with_index() do |value, index|
+                        column = index + 1
+                        key = sheet.cell(1, column).to_s
+                        doc[key] = value
+                    end
+                    $parameters["filters"].push nil
+                    $parameters["values"].push doc
+                end
+
+            end if name == "Exportar Hoja de Trabajo"
+        end
+    else
+        $parameters = json.force_encoding('UTF-8')
+        $parameters = JSON.parse(json)
+    end
+
+    # CGI tries to parse the request body as form parameters so a
+    # blob of JSON awkwardly ends up as the one and only parameter key.
+    if $parameters.has_key?("collection") then
+        puts "Working with collection: " + $parameters['collection'].to_s if ARGV[0] != nil
+        collection = client[$parameters['collection']]
+
+        if $parameters.has_key? 'filters'  then filters = $parameters['filters']  else filters = []    end
+        if $parameters.has_key? 'values'   then values  = $parameters['values']   else values  = []    end
+
+        if filters.size == values.size then
+            puts "number of filters and values match." if ARGV[0] != nil
+            updated = 0
+            filterless = []
+            filters.each_with_index do | filter, index |
+                puts "filter " + index.to_s + ": " + filter.inspect if ARGV[0] != nil
+                doc = values[index]
+                doc.hmap! { | k, v | [ k, parseValue(v) ]}
+
+                if filter == nil then
+                    puts "Will insert new document." if ARGV[0] != nil
+                    filterless.push doc
+                else
+                    puts "Will update a document using filter: " + filter.inspect if ARGV[0] != nil
+                    puts "Will update it with the following values: " + doc.inspect if ARGV[0] != nil
+                    returned_BSON = collection.find(filter).first
+                    if returned_BSON == nil then
+                        puts "The document was not found." if ARGV[0] != nil
+                        filterless.push doc
+                    else
+                        collection.find_one_and_update(filter, { "$set": doc })
+                        updated += 1
+                    end
+                end
+
+                puts "Values: " + doc.inspect if ARGV[0] != nil
+
+            end
+            puts "will insert " + filterless.size.to_s + " documents" if ARGV[0] != nil
+            inserted = 0
+            inserted = collection.insert_many(filterless).inserted_count if filterless.size > 0
+            result = {"collection": $parameters['collection'], "updated": updated, "inserted": inserted}
+            output.push result
+        else
+            puts "number of filters and values do not match." if ARGV[0] != nil
+            puts "number of filters: " + filters.size.to_s if ARGV[0] != nil
+            puts "number of values: " + values.size.to_s if ARGV[0] != nil
+        end
+
+    else
+        output = [ nil ]
+    end
+rescue Exception => e
+    output.push({"parameters": $parameters, "error": e.message, "backtrace": e.backtrace })
+end
+cgi.out("documentType=application/json; charset=utf-8"){ output.to_json } unless ARGV[0] != nil
+puts "Result: " + output.to_json if ARGV[0] != nil
+puts ''

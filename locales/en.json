@@ -1,0 +1,122 @@
+#!/usr/bin/env ruby
+
+require 'cgi'
+require 'json'
+require 'mongo'
+
+cgi = CGI.new
+
+$config = {}
+
+# Default config values
+$config["mongo-ip"]   = "127.0.0.1"
+$config["mongo-port"] = 27017
+$config["mongo-db"]   = "cbcanarias"
+
+configFile = File.expand_path(File.dirname(__FILE__)) + '/../config.json'
+load configFile if File.file? configFile
+
+Mongo::Logger.logger.level = ::Logger::FATAL
+
+client = Mongo::Client.new([ $config['mongo-ip'] + ':' + $config['mongo-port'].to_s ], :database => $config['mongo-db'])
+db = client.database
+collection = client["menus"]
+collection.indexes.create_one( { :date => -1 }, unique: false )
+collection.indexes.create_one( { "CODMENU" => 1 }, unique: false )
+collection.indexes.create_one( { "IDIOMA" => 1 }, unique: false )
+
+def slugify( string )
+    string.gsub!(/á/, "a")
+    string.gsub!(/é/, "e")
+    string.gsub!(/í/, "i")
+    string.gsub!(/ó/, "o")
+    string.gsub!(/ú/, "u")
+    string.gsub!(/ñ/, "n")
+    string.gsub!(/[\s]+/, "_")
+    string.gsub!(/[^a-z A-Z _ \- 0-9]*/, "")
+    string.downcase!
+    string
+end
+
+doc = {
+    "idioma.en":                                                               "English",
+    "idioma.es":                                                               "Español",
+    "general.actualizarnavegador":                                             "<p>Browser not supported</p>",
+    "general.agenda":                                                          "Calendar",
+    "general.albumesFotos":                                                    "Photo albums",
+    "general.anterior":                                                        "&lt;&nbsp;Previous",
+    "general.buscador":                                                        "Enter Keyword(s)",
+    "general.buscar":                                                          "Search",
+    "general.buscar2":                                                         "Search:",
+    "general.compartir":                                                       "Share",
+    "general.contenidos":                                                      "&nbsp;Contents",
+    "general.contenidosRelacionados":                                          "Related contents",
+    "general.de":                                                              "&nbsp;of&nbsp;",
+    "general.descargaArchivos":                                                "File download",
+    "general.destacamosHoy":                                                   "Highlights",
+    "general.detenerDiapositiva":                                              "Stop slideshow",
+    "general.documentos":                                                      "Documents",
+    "general.enlacesAdicionales":                                              "More links",
+    "general.fotografias":                                                     "Photos",
+    "general.hoy":                                                             "Today",
+    "general.imagenes":                                                        "Images",
+    "general.iniciarDiapositiva":                                              "Start slideshow",
+    "general.inicio":                                                          "Home",
+    "general.irGaleria":                                                       "Multimedia",
+    "general.irInicio":                                                        "Go to homepage",
+    "general.irPagina":                                                        "Go to page",
+    "general.irPaginaAnterior":                                                "Previous page",
+    "general.irPaginaSiguiente":                                               "Next page",
+
+    "general.manyanaDia":                                                      "Tomorrow",
+    "general.manyanaHora":                                                     "Morning",
+    "general.mapaWeb":                                                         "Site Map",
+    "general.menu":                                                            "Menu",
+    "general.noche":                                                           "Evening",
+    "general.noEventos":                                                       "No events found match your search criteria",
+    "general.noResultadosBusqueda":                                            "Sorry, no match found",
+    "general.noticias":                                                        "News",
+    "general.opcionesAvanzadas":                                               "Advanced search options",
+    "general.otrosAlbumes":                                                    "Other albums",
+    "general.pagina":                                                          "Page&nbsp;",
+    "general.resultadosBusqueda":                                              "Search results",
+    "general.servicios_del_establecimiento":                                   "Main&nbsp;services",
+    "general.siguiente":                                                       "Next&nbsp;&gt;",
+    "general.sonidos":                                                         "Sounds",
+    "general.tarde":                                                           "Afternoon",
+    "general.telefono":                                                        "Telephone:",
+    "general.ultima_modificacion":                                             "Last&nbsp;updated:",
+    "general.verMasImagenes":                                                  "View more pictures",
+    "general.video":                                                           "Video",
+    "general.volver":                                                          "Back",
+    "general.web":                                                             "Web:",
+
+    "recursos.nueva_ventana":                                                  "This link will open in a new window",
+
+    "pie.avisolegal":                                                          "Legal warning",
+    "pie.protecciondedatos":                                                   "Data protection",
+    "pie.indicedecontenidos":                                                  "Content index",
+    "pie.siguenos":                                                            "Follow us:",
+
+    "general.paginado_de_contenidos":                                          "Page {0} of {1} ({3} contents)",
+    "general.ultima_modificacion":                                             "Last modification: {0}",
+    "general.atras":                                                           "Back",
+    "general.numero_de_contenidos":                                            "You can see {0} {1} of {2}",
+
+    "date.schema":                                                             "dd MMMM yyyy"
+}
+
+db_strings = collection.find({"IDIOMA": "es"}, {"CODMENU": 1, "NOMBRE": 1})
+db_strings.each do | row |
+    dictionary_key = slugify row["NOMBRE"].to_s
+    row = collection.find({"IDIOMA": "en", "CODMENU": row["CODMENU"]}, {"NOMBRE": 1, "RESUMEN": 1})
+    if row.first != nil then
+        row = row.first
+        page_title = row["NOMBRE"].to_s
+        page_subtitle = row["RESUMEN"].to_s
+        doc["pagina.titulo_" + dictionary_key] = page_title if not doc.has_key? "pagina.titulo_" + dictionary_key unless row["NOMBRE"].to_s == ''
+        doc["pagina.subtitulo_" + dictionary_key] = page_subtitle if not doc.has_key? "pagina.subtitulo_" + dictionary_key unless row["RESUMEN"].to_s == ''
+    end
+end
+
+cgi.out("application/json; charset=utf-8"){ doc.to_json }

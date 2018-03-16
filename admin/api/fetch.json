@@ -1,0 +1,137 @@
+#!/usr/bin/env ruby
+################################################################################
+#                                                                              #
+#  CGI fetcher script                                                          #
+#                                                                              #
+#  Expects a JSON body by POST method, and the following parameters:           #
+#                                                                              #
+#  - collection (required)                                                     #
+#    The mongo collection in which to perform the query                        #
+#                                                                              #
+#  - language                                                                  #
+#    Defaults to 'en'. Filters results by the chosen language                  #
+#                                                                              #
+#  - values                                                                    #
+#    Defaults to *all*. The requested data from the chosen elements. If the    #
+#    elements doesn't have that property, it will be null in the anwser        #
+#                                                                              #
+#  - offset                                                                    #
+#    Defaults to 0. Used for pagination, skips that ammount of elements        #
+#                                                                              #
+#  - limit                                                                     #
+#    Defaults to 4. The ammount of elements to send back. 0 means all elements #
+#                                                                              #
+#  The script anwsers with an array of objects containing the requested        #
+#  values, or nil if the requested collection doesn't exist.                   #
+#                                                                              #
+#  If something goes wrong, the output array will contain an object with an    #
+#  error value containing the error message.                                   #
+#                                                                              #
+################################################################################
+
+require 'cgi'
+require 'json'
+require 'mongo'
+require 'date'
+
+$config = {}
+
+# Default config values
+$config["mongo-ip"]   = "127.0.0.1"
+$config["mongo-port"] = 27017
+$config["mongo-db"]   = "cbcanarias"
+
+configFile = File.expand_path(File.dirname(__FILE__)) + '/../../config.json'
+load configFile if File.file? configFile
+
+Mongo::Logger.logger.level = ::Logger::FATAL
+
+client = Mongo::Client.new([ $config['mongo-ip'] + ':' + $config['mongo-port'].to_s ], :database => $config['mongo-db'])
+$db = client.database
+
+cgi = CGI.new
+output = []
+sts = { size: 0, last_modified: nil }
+begin
+
+    # CGI tries to parse the request body as form parameters so a
+    # blob of JSON awkwardly ends up as the one and only parameter key.
+    $parameters = JSON.parse(cgi.params.keys.first)
+    if $parameters.has_key?("collection") then
+        $collection = client[$parameters['collection']]
+        $collection.indexes.create_one( { "date" => -1 }, unique: false )
+        $collection.indexes.create_one( { "F_INICIO_PUB" => -1 }, unique: false )
+        $collection.indexes.create_one( { "CODCONTENIDO" => -1 }, unique: false )
+        $collection.indexes.create_one( { "FMODIFICACION" => 1 }, unique: false )
+        $resources = client['recursos']
+        $resources.indexes.create_one( { "CODRECURSO" => -1 }, unique: false )
+        $resources.indexes.create_one( { "RECURSO" => -1 }, unique: false )
+
+        if $parameters.has_key? 'filters'  then filters = $parameters['filters']  else filters = {}    end
+        if $parameters.has_key? 'language' then lang    = $parameters['language'] else lang    = ""    end
+        if $parameters.has_key? 'values'   then values  = $parameters['values']   else values  = []    end
+        if $parameters.has_key? 'offset'   then offset  = $parameters['offset']   else offset  = 0     end
+        if $parameters.has_key? 'limit'    then limit   = $parameters['limit']    else limit   = 4     end
+        if $parameters.has_key? 'stats'    then stats   = $parameters['stats']    else stats   = false end
+        if $parameters.has_key? 'pub'      then pub     = $parameters['pub']      else pub     = true  end
+
+        filters["IDIOMA"] = lang if lang != ''
+        filters["F_INICIO_PUB"] = {'$lt': DateTime.now } if pub
+        filters["F_FIN_PUB"] = {'$gte': DateTime.now } if pub
+
+        if values != [] then
+            projection = {"_id"=> 1, "FMODIFICACION"=> 1}
+            values.each do |value|
+                projection[value] = 1
+            end
+        else
+            projection = []
+        end
+
+        doc = $collection.find( filters )
+        sts["size"] = doc.count()
+
+        doc = doc.sort({"date": -1})
+        doc = doc.skip(offset) if not offset == 0
+        doc = doc.limit(limit) if not limit == 0
+        doc = doc.projection(projection) if not projection.empty?
+
+        last_modified = doc.sort({"FMODIFICACION": 1}).first()
+        if last_modified != nil then
+            sts["last_modified"] = last_modified["FMODIFICACION"].iso8601 unless last_modified["FMODIFICACION"] == nil
+        end
+
+        doc = doc.to_a
+
+        modules = {}
+        if values != [] then
+            values.each do | value |
+                module_file = File.dirname(__FILE__) + '/fetch_custom_values/' + value + '.rb'
+                modules[value] = module_file if File.exist? (module_file)
+            end
+        else
+            Dir.glob(File.dirname(__FILE__) + '/fetch_custom_values/*.rb') do | module_file |
+                value = File.basename(module_file, File.extname(module_file))
+                modules[value] = module_file if File.exist? (module_file)
+            end
+        end
+
+        doc.each do | document |
+            @doc = $collection.find({"_id": document["_id"]}).first
+            modules.each do | value, file |
+                @value = value
+                @custom_value = nil
+                load file
+                document[@value] = @custom_value
+            end
+        end
+        output += doc
+
+    else
+        output = [ nil ]
+    end
+rescue Exception => e
+    output.push({"error": e.message, "parameters": $parameters, "backtrace": e.backtrace })
+end
+output.push( sts ) if stats
+cgi.out("documentType=application/json; charset=utf-8"){ output.to_json }
