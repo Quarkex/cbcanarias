@@ -19,7 +19,7 @@ pub: false
 <div class="page" layout="column">
     <div flex class="team">
         <md-tabs md-selected="0" md-border-bottom md-dynamic-height>
-        <md-tab ng-if="type != 'undefined'" ng-repeat="(type, members) in elements() | groupBy: 'type'">
+        <md-tab ng-if="type != 'undefined'" ng-repeat="(type, members) in elements() | orderBy: 'order' | groupBy: 'type'">
             <md-tab-label>{{ type }}</md-tab-label>
             <md-tab-body flex>
                 <div flex>
@@ -72,6 +72,7 @@ pub: false
                             <input type="hidden" name="image_name" value="{{ member.name | slugify }}" required>
                             <md-input-container flex="100" flex-gt-sm="50" ng-repeat="(label, data) in 
                                 {
+                                    'Orden':                    ['text',   'order',     true ],
                                     'Nombre':                   ['text',   'name',      true ],
                                     'Tipo':                     ['text',   'type',      true ],
                                     'Número':                   ['text',   'number',    false],

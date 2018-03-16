@@ -12,7 +12,7 @@ pub: false
     <div layout="row"><h1 flex class="page-title">Equipo</h1></div>
     <div flex class="team">
         <md-tabs md-selected="0" md-border-bottom md-dynamic-height>
-        <md-tab ng-if="type != 'undefined'" ng-repeat="(type, members) in elements() | groupBy: 'type'">
+        <md-tab ng-if="type != 'undefined'" ng-repeat="(type, members) in elements() | orderBy: 'order' | groupBy: 'type'">
             <md-tab-label>{{ type }}</md-tab-label>
             <md-tab-body flex>
                 <div flex>

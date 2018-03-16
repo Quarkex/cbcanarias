@@ -8,6 +8,7 @@ app.directive('appTeamMemberEditorView', function () {
                 '<input type="hidden" name="image_name" value="{{ member.name | slugify }}" required>' +
                 '<md-input-container flex="100" flex-gt-sm="50" ng-repeat="(label, data) in ' +
                     "{" +
+                        "'Orden':                    ['text',   'order',     true ]," +
                         "'Nombre':                   ['text',   'name',      true ]," +
                         "'Tipo':                     ['text',   'type',      true ]," +
                         "'Número':                   ['text',   'number',    false]," +

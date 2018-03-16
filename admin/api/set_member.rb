@@ -26,6 +26,7 @@ collection = client["team"]
 cgi = CGI.new("html4")
 begin
     $member = {}
+    $order = nil
     $id = nil
     $language = 'es'
     $image_name = nil
@@ -47,6 +48,8 @@ begin
             $language = cgi[param] if cgi[param] != nil and cgi[param] != ''
         when "image_name"
             $image_name = cgi[param] if cgi[param] != nil and cgi[param] != ''
+        when "order"
+            $order = cgi[param].to_i if cgi[param] != nil and cgi[param] != ''
         when "name"
             $name = cgi[param] if cgi[param] != nil and cgi[param] != ''
         when "type"
@@ -77,6 +80,7 @@ begin
         $member['ID'] = (last == nil or last["ID"] == nil) ? 0 : last["ID"] + 1
     end
     $member['IDIOMA']    = $language
+    $member['order']     = $order
     $member['name']      = $name
     $member['type']      = $type
     $member['number']    = $number
