@@ -89,7 +89,7 @@ app.controller("showcaseCtrl", function($rootScope, $scope, showcase) {
         "filters": {"showcaser": true, "published": true},
         "values": [ "figure", "id", "title", "date", "excerpt" ],
         "offset": 0,
-        "limit": 4
+        "limit": 5
     });
 
     $rootScope['showcase_status'] = showcase.element_status;
