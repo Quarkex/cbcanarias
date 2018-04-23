@@ -1,17 +1,17 @@
 .title-bar {
     padding: 0;
     background-color: transparent !important;
-    color: $main_color;
+    color: $main_color_contrast;
     width: 100%;
 
     .md-button, .md-button * {
-        color: $main_color;
-        text-shadow: 0.1em 0.05em $main_color_contrast;
+        color: $main_color_contrast;
+        text-shadow: 0.1em 0.05em $main_color;
         font-weight: bold;
     }
     *:not(.submenu) {
         background-color: transparent;
-        color: $main_color;
+        color: $main_color_contrast;
     }
     *.submenu{
         background-color: $main_color-transparent;

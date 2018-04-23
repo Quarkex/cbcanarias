@@ -2,8 +2,8 @@ app.directive('appGui', function () {
 
     var template = 
         '<app-header class="hide-for-print"></app-header>' +
-        '<app-sliding-banner class="hide-for-print"></app-sliding-banner>' +
         '<app-titlebar class="hide-for-print"></app-titlebar>' +
+        '<app-sliding-banner class="hide-for-print"></app-sliding-banner>' +
         '<div ng-transclude flex layout="column"></div>';
     template = '<div layout="column" flex flex-gt-xs="90">' + template + '</div>';
     template = '<div layout="row" flex="100" layout-align="center start" style="min-height: 100vh;">' + template + '</div>';
