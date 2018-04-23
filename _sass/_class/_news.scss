@@ -2,6 +2,9 @@
     article {
         padding: 0.5em;
         background-color: $news_background_color;
+        a {
+            text-shadow: 0.1em 0.05em $main_color_contrast;
+        }
     }
     figure {
         margin: 1em 0;

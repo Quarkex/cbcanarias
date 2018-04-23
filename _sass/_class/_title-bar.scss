@@ -4,8 +4,10 @@
     color: $main_color;
     width: 100%;
 
-    .md-button * {
+    .md-button, .md-button * {
         color: $main_color;
+        text-shadow: 0.1em 0.05em $main_color_contrast;
+        font-weight: bold;
     }
     *:not(.submenu) {
         background-color: transparent;
