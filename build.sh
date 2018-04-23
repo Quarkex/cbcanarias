@@ -11,6 +11,8 @@ if [[ ! -d files ]]; then
 fi
 if [[ ! -d _site ]]; then
     mkdir _site;
+    ln -s ../files _site/files
+    ln -s ../img _site/img
 else
     if [[ -f _site ]]; then
         mv _site _site.bak;
