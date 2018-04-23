@@ -71,7 +71,7 @@ begin
                 sha1 = Digest::SHA1.file file
                 $filename = sha1.to_s + File.extname(file.original_filename)
             when 'team_member', 'team_logo', 'patreon_logo', 'league_logo', 'banner'
-                basename = File.basename(file.original_filename)
+                basename = File.basename(file.original_filename, File.extname(file.original_filename))
                 basename = cgi.params['name'][0] if cgi.params['name'][0] != nil and cgi.params['name'][0] != ''
                 $filename = basename + File.extname(file.original_filename)
             end

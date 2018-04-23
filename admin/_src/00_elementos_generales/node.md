@@ -25,6 +25,7 @@ collection: "articles"
                         <option value="file">Archivo</option>
                         <option value="ads">Anuncio</option>
                         <option value="banner">Banner</option>
+                        <option value="image">Escudo o fondo</option>
                         <option value="team_member">Foto de miembro</option>
                         <option value="league_logo">Logo de liga</option>
                         <option value="team_logo">Logo de equipo</option>
