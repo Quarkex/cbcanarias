@@ -11,6 +11,8 @@ app.directive('appHeader', function () {
                 '<figure flex layout="row" layout-align="center end"><img src="/img/banners/01.png" alt="banner"></figure>' +
                 '<figure flex layout="row" layout-align="center end"><img src="/img/banners/02.png" alt="banner"></figure>' +
                 '<figure flex layout="row" layout-align="center end"><img src="/img/banners/03.png" alt="banner"></figure>' +
+                '<figure flex layout="row" layout-align="center end"><img src="/img/banners/04.png" alt="banner"></figure>' +
+                '<figure flex layout="row" layout-align="center end"><img src="/img/banners/05.png" alt="banner"></figure>' +
             '</div>' +
         '</div>';
 
