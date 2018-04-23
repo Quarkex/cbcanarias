@@ -140,6 +140,6 @@ id: "el_club"
 
     <p><strong>La gran crisis y el renacer –</strong> Luego llegaría el descenso en Ferrol, en el curso 90-91; el declive hasta empezar otra vez de cero; la fallida fusión del baloncesto tinerfeño a principios de los noventa y el posterior resurgir aurinegro en categorías nacionales. El mismo resurgir, que tras los ascensos a Primera Autonómica, EBA, LEB II y Adecco Oro, sigue ahora mismo en marcha.</p>
 
-    <p>– Pinchar <a href="/files/elclub/AURINEGROS_5.pdf">aquí</a> para más información sobre la historia del club.</p>
+    <p>– Pinchar <a href="/files/revista_oficial/AURINEGROS_5.pdf">aquí</a> para más información sobre la historia del club.</p>
 
 </div>
