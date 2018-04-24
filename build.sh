@@ -48,7 +48,7 @@ olf_ifs="$IFS"
 # grabs all files wich don't start with an underscore or in our blacklist
 IFS=$'\n'; for i in $(find . -type f | grep -v -e "/_" -e ".sass-cache" -e '.git' -e '.gitignore' -e 'make.rb' -e 'compile.sh' -e 'config.json.example'); do
     if [[ ${i##./} == ${0##./} ]]; then continue; fi
-    if [[ -e ${i} ]]; then continue; fi
+    if [[ -e "_site/${i}" ]]; then continue; fi
     item="${i##./}";
     if [[ ! ${item%/*} == ${i##*/} ]]; then
         mkdir -p _site/${item%/*};
