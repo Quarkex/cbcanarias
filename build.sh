@@ -86,10 +86,10 @@ IFS=$'\n'; for i in $(find . -type f | grep -v -e "/_" -e ".sass-cache" -e '.git
 done;
 IFS="${old_ifs}";
 
-find . -type d -exec chmod 775 "{}" \; ;
-find . -type f -exec chmod 664 "{}" \; ;
+find . -type d -not -perm 775 -exec chmod 775 "{}" \; ;
+find . -type f -not -perm 664 -not \( -path "_site/api/*" -o -path "_site/locales/*" -o -path "_site/admin/*" -o -path "api/*" -o -path "locales/*" -o -path "admin/*" \) -not \( -iname "*.sh" -o - "*.json" -o - "*.rb" \) -exec chmod 664 "{}" \; ;
 for i in "api/" "_site/api/" "locales/" "_site/locales/" "admin/" "_site/admin/"; do
-    find "$i" -type f \( -iname "*.rb" -o -iname "*.json"  -o -iname "*.sh" \) -exec chmod 774 "{}" \; ;
+    find "$i" -type f -not -perm 774 \( -iname "*.rb" -o -iname "*.json"  -o -iname "*.sh" \) -exec chmod 774 "{}" \; ;
 done;
 chmod 774 "$0"
-chown -R www-data:www-data .
+find . -not -user www-data -exec chown www-data:www-data "{}" \; ;
