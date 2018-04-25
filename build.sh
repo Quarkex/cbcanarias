@@ -29,6 +29,11 @@ fi
 
 # compile the navigation tree
 /usr/bin/env ruby make.rb
+if [[ -f ./admin ]]; then
+    cd ./admin
+    /usr/bin/env ruby make.rb
+    cd ..
+fi
 
 # grabs all releant files in _sass folder and builds a single, minified css
 echo "" > _sass/_sass_imports.scss;
