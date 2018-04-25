@@ -87,7 +87,7 @@ done;
 IFS="${old_ifs}";
 
 find . -type d -not -perm 775 -exec chmod 775 "{}" \; ;
-find . -type f -not -perm 664 -not \( -path "_site/api/*" -o -path "_site/locales/*" -o -path "_site/admin/*" -o -path "api/*" -o -path "locales/*" -o -path "admin/*" \) -not \( -iname "*.sh" -o - "*.json" -o - "*.rb" \) -exec chmod 664 "{}" \; ;
+find . -type f -not -perm 664 -not \( -path "_site/api/*" -o -path "_site/locales/*" -o -path "_site/admin/*" -o -path "api/*" -o -path "locales/*" -o -path "admin/*" \) -not \( -iname "*.sh" -o -iname "*.json" -o -iname "*.rb" \) -exec chmod 664 "{}" \; ;
 for i in "api/" "_site/api/" "locales/" "_site/locales/" "admin/" "_site/admin/"; do
     find "$i" -type f -not -perm 774 \( -iname "*.rb" -o -iname "*.json"  -o -iname "*.sh" \) -exec chmod 774 "{}" \; ;
 done;
