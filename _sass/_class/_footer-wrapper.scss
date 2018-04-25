@@ -1,12 +1,19 @@
 .footer-wrapper {
+    & > *:first-child{
+        border-top: 0.125em solid $black;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    border-top: 0.25em solid $white;
     background-color: $main_color;
     color: $main_color_contrast;
-    border-top: 2px solid $edges_color;
     white-space: nowrap;
     a {
         color: $main_color_contrast;
     }
     > div {
         font-size: 70%;
+        font-weight: bold;
     }
 }
