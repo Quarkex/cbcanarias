@@ -24,15 +24,32 @@ app.directive('appFooter', function () {
     ];
 
     var footer_string = '';
+    var footer_logo_string = '';
     var footer_dialogs_string = '';
     var footer_left_string = '';
     var footer_center_string = '';
     var footer_right_string = '';
 
     var i = 0;
+    var dialogs_length = 0;
 
     for ( i = 0; i < footer_dialogs.length; i++){
-        footer_dialogs_string = footer_dialogs_string + '<a ng-click="dialog=\'assets/dialogs/' + footer_dialogs[i][1] + '.tmpl.html\'; showDialog();">' + footer_dialogs[i][0] + '</a>';
+        if (footer_dialogs[i][0].length > dialogs_length) dialogs_length = footer_dialogs[i][0].length;
+    }
+
+    footer_logo_string = '<img style="height: 12em;" src="img/logo.png">'
+    footer_logo_string = '<a href="#!/{{ lang() }}/">' + footer_logo_string + '</a>'
+    footer_logo_string = '<div flex layout="row" layout-align="center center" layout-margin>' + footer_logo_string + '</div>'
+
+    for ( i = 0; i < footer_dialogs.length; i++){
+        string = footer_dialogs[i][0]
+        while (string.length < dialogs_length) string += ' ';
+        if ( string.match(/[\ ]+$/) != null ){
+            space = string.match(/[\ ]+$/)[0];
+            space = space.replace(/ /g, '&puncsp;');
+            string = string.replace(/[\ ]+$/, space)
+        }
+        footer_dialogs_string = footer_dialogs_string + '<a style="font-family: monospace; font-size: 150%;" ng-click="dialog=\'assets/dialogs/' + footer_dialogs[i][1] + '.tmpl.html\'; showDialog();">' + string + '</a>';
         if ( i != (footer_dialogs.length - 1) ) footer_dialogs_string = footer_dialogs_string + ' <span hide-xs>|</span> ';
     }
     footer_dialogs_string = '<div flex layout="column" layout-gt-xs="row" layout-align="center center" layout-margin>' + footer_dialogs_string + '</div>';
@@ -54,7 +71,7 @@ app.directive('appFooter', function () {
 
     footer_string = footer_left_string + footer_center_string + footer_right_string;
     footer_string = '<div flex layout="column" layout-gt-sm="row" layout-padding>' + footer_string + '</div>';
-    footer_string = '<div ng-controller="footerCtrl" class="footer-wrapper hide-for-print" layout="column" flex>' + footer_dialogs_string + footer_string + '</div>';
+    footer_string = '<div ng-controller="footerCtrl" class="footer-wrapper hide-for-print" layout="column" flex>' + footer_logo_string + footer_dialogs_string + footer_string + '</div>';
 
 
     template = footer_string;
