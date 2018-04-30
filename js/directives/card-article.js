@@ -4,7 +4,7 @@ app.directive('appCardArticle', function () {
         '<div flex="33">' +
             '<figure bind-html-compile="item.figure"></figure>' +
         '</div>' +
-        '<div flex="66" layout="column">' +
+        '<div flex="66" layout="column" style="margin-right: 3em;">' +
             '<header>' +
                 '<h4><a href="{{ prefix }}/{{ item.id }}">{{ item.title }}</a></h4>' +
             '</header>' +

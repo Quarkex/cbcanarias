@@ -10,10 +10,10 @@ view: "article"
 "limit": 10
 "pub": false
 ---
-<div class="page" layout="column" layout-margin>
+<div class="page news-list" layout="column" layout-margin>
     <h1>Noticias</h1>
     <app-paginator-browser>
-        <div flex-gt-xs="90" ng-repeat="card in elements()">
+        <div flex-gt-xs="100" ng-repeat="card in elements()">
             <app-card-article item="card" prefix="node.href"></app-card-article>
         </div>
     </app-paginator-browser>
