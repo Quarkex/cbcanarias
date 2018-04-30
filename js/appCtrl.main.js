@@ -71,10 +71,19 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
                 var l = {};
                 l["href"] = n["href"] != null ? n["href"] : node["href"] + '/' + n["id"];
                 l["position"] = n["position"] != null ? n["position"] : "left";
+                if (n["nodes"].length > 0){
+                    l["sublinks"] = [];
+                    for ( var j = 0; j < n["nodes"].length; j++ ){
+                        sublink = { "title": n["nodes"][j]["title"], "href": n["nodes"][j]["href"] }
+                        l["sublinks"].push(sublink);
+                    }
+                } else {
+                    l["sublinks"] = [];
+                }
                 if (n["nodes"] != undefined){
                     if (n["nodes"].length > 0){
                         l["content"] = {};
-                        for (var j = 0; j < n["nodes"].length; j++){
+                        for (j = 0; j < n["nodes"].length; j++){
                             var sn = n["nodes"][j];
                             if (sn["href"] == undefined) sn["href"] = l["href"] + '/' + sn["id"];
                             l["content"][sn["title"]] = { href: sn["href"] };

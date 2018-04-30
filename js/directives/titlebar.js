@@ -13,10 +13,28 @@ app.directive('appTitlebar', function () {
 
     var permanent_class = "md-primary";
     var current_condition = 'sections()[sections().length -1] == link.href.split(\'/\').pop()';
+    var ng_class='ng-class=" ' + current_condition + ' ? \'' + permanent_class + ' active' + '\' : \'' + permanent_class + '\'"';
+    var ng_href='ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}"';
+    var sublink_ng_href='ng-href="{{ sublink.href.substring(0,4) == \'http\' ? sublink.href : \'#!/\' + lang() + \'/\' + sublink.href }}"';
+    var at_left = 'ng-if="link.position == \'left\'"';
+    var at_right = 'ng-if="link.position == \'right\'"';
+    var with_sublinks = 'ng-if="link.sublinks.length > 0"';
+    var without_sublinks = 'ng-if="link.sublinks.length == 0"';
+    var open_menu = 'ng-click="$mdMenu.open()"';
 
-    var left_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ng-if="link.position == \'left\'"><md-button ng-class=" ' + current_condition + ' ? \'' + permanent_class + ' active' + '\' : \'' + permanent_class + '\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}">{{ label }}</md-button></div>';
+    var button = '<md-button ' + without_sublinks + ' ' + ng_class + ' ' + ng_href + '>{{ label }}</md-button>' +
+        '<md-menu ' + with_sublinks + '>' +
+            '<md-button ' + open_menu + ' ' + ng_class + '>{{ label }}</md-button>' +
+            '<md-menu-content width="4">' +
+                '<md-menu-item ng-repeat="sublink in link.sublinks">' +
+                    '<md-button ' + sublink_ng_href + '>{{ sublink.title }}</md-button>' +
+                '</md-menu-item>' +
+            '</md-menu-content>' +
+        '</md-menu>';
+
+    var left_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ' + at_left + '>' + button + '</div>';
     left_buttons = '<div layout="row" flex>' + left_buttons + '</div>';
-    var right_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ng-if="link.position == \'right\'"><md-button ng-class=" ' + current_condition + ' ? \'' + permanent_class + ' active' + '\' : \'' + permanent_class + '\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}">{{ label }}</md-button></div>';
+    var right_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ' + at_right + '>' + button + '</div>';
     right_buttons = '<div layout="row">' + right_buttons + '</div>';
 
     var large_menu = left_buttons + right_buttons;
