@@ -1,17 +1,29 @@
 .content-wrapper *:not(menu-toolbar){
     h1, h2, h3 {
         font-family: 'Raleway', sans-serif;
-        font-weight: 300;
+        font-weight: bold;
         text-transform: uppercase;
+        color: $main_color;
+        text-shadow: 0px 0px 1px $main_color_contrast;
+        border-bottom-color: $white;
+        border-bottom-style: solid;
+        border-bottom-width: 0.25em;
+        margin-left: 1.5em;
+        margin-right: 1.5em;
     }
     h2, h3 {
         border-bottom-color: $main_color;
-        border-bottom-style: solid;
         border-bottom-width: 3px;
         display: inline-block;
     }
+    h1 {
+        font-size: xx-large;
+    }
     h2 {
-        font-size: 2em;
+        font-size: x-large;
+    }
+    h3 {
+        font-size: large;
     }
     .news {
         .article-content {
