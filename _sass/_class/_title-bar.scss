@@ -31,6 +31,10 @@
             padding: 0.7em;
         }
     }
+    .active {
+        color: $button_active;
+    }
+
 }
 /*
  * Enable this after fixing JS infinite recursion problems

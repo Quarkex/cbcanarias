@@ -11,9 +11,12 @@ app.directive('appTitlebar', function () {
     //var small_menu = menu_button + menu_title + language_selector;
     var small_menu = '<span hide-gt-md layout="row" layout-align="begin center">' + menu_button + menu_title + '</span>';
 
-    var left_buttons = '<md-button class="md-primary" style="min-width: 1%;" ng-if="link.position == \'left\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}" ng-repeat="(label, link) in nav">{{ label }}</md-button>';
+    var permanent_class = "md-primary";
+    var current_condition = 'sections()[sections().length -1] == link.href.split(\'/\').pop()';
+
+    var left_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ng-if="link.position == \'left\'"><md-button ng-class=" ' + current_condition + ' ? \'' + permanent_class + ' active' + '\' : \'' + permanent_class + '\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}">{{ label }}</md-button></div>';
     left_buttons = '<div layout="row" flex>' + left_buttons + '</div>';
-    var right_buttons = '<md-button class="md-primary" style="min-width: 1%;" ng-if="link.position == \'right\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}" ng-repeat="(label, link) in nav">{{ label }}</md-button>';
+    var right_buttons = '<div ng-repeat="(label, link) in nav" style="min-width: 1%;" ng-if="link.position == \'right\'"><md-button ng-class=" ' + current_condition + ' ? \'' + permanent_class + ' active' + '\' : \'' + permanent_class + '\'" ng-href="{{ link.href.substring(0,4) == \'http\' ? link.href : \'#!/\' + lang() + \'/\' + link.href }}">{{ label }}</md-button></div>';
     right_buttons = '<div layout="row">' + right_buttons + '</div>';
 
     var large_menu = left_buttons + right_buttons;
