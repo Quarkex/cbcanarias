@@ -1,6 +1,6 @@
 app.directive('appArticleShowcaser', function () {
 
-    var template = '<h2 style="width: 100%;">Noticias</h2>' +
+    var template = '<h2 style="display: inherit;">Noticias</h2>' +
     '<div id="news_contents" class="news" layout="row" ng-controller="showcaseCtrl" layout-wrap layout-padding>' +
         '<div layout="column" flex="100" flex-gt-xs="50" flex-gt-md="20" ng-repeat="article in elements() | limitTo: 5" layout-align="space-between strech">' +
             '<article flex="100" layout="column" layout-padding>' +
