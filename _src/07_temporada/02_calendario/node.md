@@ -1,7 +1,6 @@
 ---
 title: "Calendario"
 id: "calendario"
-position: "right"
 collection: "matches"
 "values_list": ['type', 'day_number', 'date', 'hour', 'local_team', 'visitor_team']
 "values_view": ['type', 'day_number', 'date', 'hour', 'local_team', 'visitor_team']
