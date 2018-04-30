@@ -1,7 +1,8 @@
 .team {
+    margin-left: 3.5em !important;
+    margin-right: 3.5em !important;
     figcaption {
-        background: $caption_background_color;
-        color: $main_color;
+        color: $main_color_contrast;
         padding-top: 1.5em;
         p {
             font-size: 70%;
