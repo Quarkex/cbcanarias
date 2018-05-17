@@ -26,4 +26,7 @@
     <div layout="row" layout-padding>
         <app-article-showcaser flex="100"></app-article-showcaser>
     </div>
+    <div layout="row" layout-padding>
+        <app-institutional-banner flex="100"></app-ads-banner>
+    </div>
 </div>
