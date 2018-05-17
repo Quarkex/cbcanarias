@@ -12,9 +12,11 @@
             <app-patreons flex="50"></app-patreons>
         </div>
     </div>
+    <!--
     <div layout="row" layout-padding>
         <app-patreon-slider flex="100"></app-patreon-slider>
     </div>
+    -->
     <div layout="row" layout-padding>
         <app-social-media hide-xs hide-gt-xs show-gt-md flex="100"></app-social-media>
     </div>
