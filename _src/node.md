@@ -6,8 +6,11 @@
 
 <div flex="100" layout="column" layout-align="center strech" layout-margin>
     <div layout="column" layout-gt-xs="row" layout-padding>
-        <app-slideshow flex flex-gt-sm="55"></app-slideshow>
-        <app-poster flex flex-gt-sm="45" ng-controller="posterCtrl"></app-poster>
+        <app-slideshow flex></app-slideshow>
+        <div layout="row" flex>
+            <app-poster flex="50" ng-controller="posterCtrl"></app-poster>
+            <app-patreons flex="50"></app-patreons>
+        </div>
     </div>
     <div layout="row" layout-padding>
         <app-patreon-slider flex="100"></app-patreon-slider>

@@ -40,6 +40,24 @@ app.controller("sliderCtrl", function($rootScope, $scope, slider) {
     $rootScope['slider_status'] = slider.element_status;
 });
 
+app.service('patreons', ["language", "$resource", ResourcePaginator]);
+app.controller("patreonsCtrl", function($rootScope, $scope, patreons) {
+
+    patreons.expose_interface($scope);
+
+    patreons.set_values({
+        "language": '',
+        "pub": false,
+        "collection": "patreons",
+        "filters": {"featured": true},
+        "values": [ "name", "link", "weight" ],
+        "offset": 0,
+        "limit": 0
+    });
+
+    $rootScope['patreons_status'] = patreons.element_status;
+});
+
 app.service('patreonsScroll', ["language", "$resource", ResourcePaginator]);
 app.controller("patreonsScrollCtrl", function($rootScope, $scope, patreonsScroll) {
 
