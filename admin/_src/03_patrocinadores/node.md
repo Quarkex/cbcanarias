@@ -59,6 +59,7 @@ pub: false
                                     'Nombre':                   ['text',     'name',        true ],
                                     'Tipo':                     ['text',     'type',        true ],
                                     'Visible en slider':        ['checkbox', 'scrolleable', false],
+                                    'Destacado':                ['checkbox', 'featured',    false],
                                     'Peso':                     ['number',   'weight',      false],
                                     'Enlace':                   ['text',     'link',        false]
                                 }
