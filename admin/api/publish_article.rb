@@ -33,7 +33,8 @@ begin
     if cgi.params.has_key? 'id' then
         $doc['id'] = cgi['id'].to_i
     else
-        $last_db_id = collection.find().sort({"id": -1}).first['id'].to_i
+        $last_db_entry = collection.find().sort({"id": -1}).first
+        $last_db_id = $last_db_entry.nil? ? 0 : $last_db_entry['id'].to_i
         $doc['id'] = $last_db_id + 1
     end
 

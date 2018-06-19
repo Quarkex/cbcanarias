@@ -148,3 +148,19 @@ app.controller("buttonsCtrl", function($rootScope, $scope, buttons) {
         "limit": 0
     });
 });
+
+app.service('staticData', ["language", "$resource", ResourcePaginator]);
+app.controller("staticDataCtrl", function($rootScope, $scope, staticData) {
+
+    staticData.expose_interface($scope);
+
+    staticData.set_values({
+        "language": '',
+        "pub": false,
+        "collection": "static",
+        "filters": {},
+        "values": [ "id", "title", "content" ],
+        "offset": 0,
+        "limit": 0
+    });
+});

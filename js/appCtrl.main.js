@@ -295,9 +295,9 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
     $rootScope.empty_rows = new Array(10);
 
     $rootScope.ckOptions = {
-        language: 'en',
-        allowedContent: true,
-        entities: false
+        language: lang(),
+        entities_latin: false,
+        allowedContent: true
     };
 
     $rootScope.loadingResources = function(){

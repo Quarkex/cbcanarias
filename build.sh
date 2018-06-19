@@ -28,6 +28,11 @@ else
 fi
 
 # compile the navigation tree
+
+cd ./admin
+/usr/bin/env ruby make.rb
+cd ../
+
 /usr/bin/env ruby make.rb
 if [[ -f ./admin ]]; then
     cd ./admin
