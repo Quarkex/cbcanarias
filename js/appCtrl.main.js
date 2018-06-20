@@ -340,6 +340,21 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
         });
     };
 
+    $rootScope.remove_content = function(content) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('¿Está seguro?')
+            .textContent('Esta acción no se puede deshacer.')
+            .ariaLabel('Confirmación')
+            .ok('Eliminar contenido')
+            .cancel('Cancelar');
+
+        $mdDialog.show(confirm).then(function() {
+            $http({ method: 'POST', data: { "collection": "static", "filters": [{ "id": content["id"] }] }, url: 'api/delete.json' });
+            $location.path( $rootScope.lang() + '/contenido/');
+        });
+    };
+
     $rootScope.toolbar = {
         changeName: function(item, ev){
             var confirm = $mdDialog.prompt()
