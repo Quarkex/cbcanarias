@@ -106,6 +106,7 @@ app.directive('appArticleEditorView', function () {
                     '<span ng-click="toolbar.changeDate(article, $event)">{{ article.date | date }}</span>' +
                 '</div>' +
                 '<div layout="row" flex="100" layout-align="end">' +
+                    '<a class="md-button md-warn" ng-click="remove_article(article);">Borrar artículo</a>' +
                     '<input class="md-button" type="submit" value="Guardar">' +
                 '</div>' +
             '</div>' +

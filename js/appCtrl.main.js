@@ -325,6 +325,21 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
         });
     };
 
+    $rootScope.remove_article = function(article) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('¿Está seguro?')
+            .textContent('Esta acción no se puede deshacer.')
+            .ariaLabel('Confirmación')
+            .ok('Eliminar artículo')
+            .cancel('Cancelar');
+
+        $mdDialog.show(confirm).then(function() {
+            $http({ method: 'POST', data: { "collection": "articles", "filters": [{ "id": article["id"] }] }, url: 'api/delete.json' });
+            $location.path( $rootScope.lang() + '/noticias/');
+        });
+    };
+
     $rootScope.remove_team_member = function(member) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
