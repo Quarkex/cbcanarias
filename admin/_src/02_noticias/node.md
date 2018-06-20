@@ -101,7 +101,7 @@ limit: 20
                         </md-toolbar>
                         <div flex layout="row" layout-wrap>
                             <div layout="row" flex="100">
-                                <div style="min-height: 50vh; width: 100%; padding: 1em;" class="article-content md-whiteframe-1dp" ng-model="article.content" ckeditor="options" ready="onReady()" contenteditable="true"></div>
+                                <div style="min-height: 50vh; width: 100%; padding: 1em;" class="article-content md-whiteframe-1dp" ng-model="article.content" ckeditor="ckOptions" ready="onReady()" contenteditable="true"></div>
                                 <input type="hidden" name="title" value="{{ article.title }}">
                                 <input type="hidden" name="excerpt" value="{{ article.excerpt }}">
                                 <input type="hidden" name="day" value="{{ article.date.getDate() }}">

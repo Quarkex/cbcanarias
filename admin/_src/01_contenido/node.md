@@ -40,7 +40,7 @@ limit: 1000
                         </md-toolbar>
                         <div flex layout="row" layout-wrap>
                             <div layout="row" flex="100">
-                                <div style="min-height: 50vh; width: 100%; padding: 1em;" class="content-content md-whiteframe-1dp" ng-model="content.content" ckeditor="options" ready="onReady()" contenteditable="true"></div>
+                                <div style="min-height: 50vh; width: 100%; padding: 1em;" class="content-content md-whiteframe-1dp" ng-model="content.content" ckeditor="ckOptions" ready="onReady()" contenteditable="true"></div>
                                 <input type="hidden" name="title" value="{{ content.title }}">
                                 <input type="hidden" name="content" value="{{ content.content }}">
                             </div>
