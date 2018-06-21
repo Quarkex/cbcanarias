@@ -2,8 +2,8 @@
 id: "equipo"
 title: "Equipo"
 collection: "team"
-values_list: [ "name", "type", "number", "seasons", "origin", "birthdate", "position", "height", "link", "ID" ]
-values_view: [ "name", "type", "number", "seasons", "origin", "birthdate", "position", "height", "link", "ID" ]
+values_list: [ "order", "name", "type", "number", "seasons", "origin", "birthdate", "position", "height", "link", "ID" ]
+values_view: [ "order", "name", "type", "number", "seasons", "origin", "birthdate", "position", "height", "link", "ID" ]
 view: "team-member-editor"
 pub: false
 ---
