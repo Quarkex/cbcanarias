@@ -49,6 +49,10 @@ begin
             $type = cgi[param]                    if cgi[param] != nil and cgi[param] != ''
         when "weight"
             $weight = cgi[param].to_i             if cgi[param] != nil and cgi[param] != ''
+        when "in_page"
+            $in_page = (cgi[param] == 'true')     if cgi[param] != nil and cgi[param] != ''
+        when "in_footer"
+            $in_footer = (cgi[param] == 'true')   if cgi[param] != nil and cgi[param] != ''
         when "scrolleable"
             $scrolleable = (cgi[param] == 'true') if cgi[param] != nil and cgi[param] != ''
         when "link"
@@ -68,6 +72,8 @@ begin
     $patreon['name']        = $name
     $patreon['type']        = $type
     $patreon['weight']      = $weight
+    $patreon['in_footer']   = $in_footer
+    $patreon['in_page']     = $in_page
     $patreon['scrolleable'] = $scrolleable
     $patreon['link']        = $link
 

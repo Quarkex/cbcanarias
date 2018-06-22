@@ -2,14 +2,14 @@
 title: "Patrocinadores"
 id: "patrocinadores"
 collection: "patreons"
-values-view: ["type", "name", "link","weight"]
-values-list: ["type", "name", "link","weight"]
+values-view: ["type", "name", "link","weight", "in_page"]
+values-list: ["type", "name", "link","weight", "in_page"]
 pub: false
 limit: 0
 ---
 <div class="page patreons" layout="row" layout-margin layout-wrap>
     <div flex="100"><h1 class="page-title">Patrocinadores</h1></div>
-    <div layout="row" flex="100" ng-if="type != 'undefined'" ng-repeat="(type, patreons) in elements() | orderBy:'weight' | groupBy: 'type'" layout-wrap>
+    <div layout="row" flex="100" ng-if="type != 'undefined'" ng-repeat="(type, patreons) in elements() | filter:true:in_page | orderBy:'weight' | groupBy: 'type'" layout-wrap>
         <div flex="100">
             <h2>{{ type }}</h2>
         </div>

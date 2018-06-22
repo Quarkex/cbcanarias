@@ -2,8 +2,8 @@
 id: "patrocinadores"
 title: "Patrocinadores"
 collection: "patreons"
-values_list: [ "name", "type", "link", "ID", "scrolleable", "weight" ]
-values_view: [ "name", "type", "link", "ID", "scrolleable", "weight" ]
+values_list: [ "name", "type", "link", "ID", "in_footer", "in_page", "scrolleable", "weight" ]
+values_view: [ "name", "type", "link", "ID", "in_footer", "in_page", "scrolleable", "weight" ]
 view: "patreon-editor"
 pub: false
 ---
@@ -50,7 +50,7 @@ pub: false
                 <md-content layout="row" layout-wrap layout-padding>
                     <h1 flex="100" class="md-display-2">Nuevo patrocinador</h1>
 
-                    <div layout="row" ng-init="patreon = {'weight': 50};" layout-align="center center" layout-wrap>
+                    <div layout="row" ng-init="patreon = {'weight': 50, 'in_page': true};" layout-align="center center" layout-wrap>
                         <form flex="100" method="POST" enctype="multipart/form-data" action="api/set_patreon.rb" layout="row" layout-wrap>
                             <input type="hidden" name="IDIOMA"     value="{{ lang() }}"                required>
                             <input type="hidden" name="image_name" value="{{ patreon.name | slugify }}" required>
@@ -58,6 +58,8 @@ pub: false
                                 {
                                     'Nombre':                   ['text',     'name',        true ],
                                     'Tipo':                     ['text',     'type',        true ],
+                                    'Visible en footer':        ['checkbox', 'in_footer',   false],
+                                    'Visible en página':        ['checkbox', 'in_page',     false],
                                     'Visible en slider':        ['checkbox', 'scrolleable', false],
                                     'Destacado':                ['checkbox', 'featured',    false],
                                     'Peso':                     ['number',   'weight',      false],
