@@ -302,7 +302,7 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
 
     $rootScope.loadingResources = function(){
         var output = 0;
-        var resources = ['element_status', 'language_status', 'poster_status', 'slider_status', 'showcase_status', 'slideshow_status', 'patreons_status'];
+        var resources = ['element_status', 'language_status', 'poster_status', 'slider_status', 'showcase_status', 'slideshow_status', 'patreons_footer_status', 'patreons_scroll_status', 'patreons_status'];
         for ( var i = 0; i < resources.length; i++ ){
             var resource = $rootScope[resources[i]];
             if(typeof(resource) === 'function') if (resource() == 'loading') output++;
