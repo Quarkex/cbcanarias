@@ -91,7 +91,7 @@ app.controller("patreonsScrollCtrl", function($rootScope, $scope, patreonsScroll
         "limit": 0
     });
 
-    $rootScope['patreons_status'] = patreonsScroll.element_status;
+    $rootScope['patreons_scroll_status'] = patreonsScroll.element_status;
 });
 
 app.service('slideshow', ["language", "$resource", ResourcePaginator]);
