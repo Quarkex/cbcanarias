@@ -34,7 +34,7 @@ app.directive('appPatreonEditorView', function () {
 
                 '<div layout="row" layout-align="end center" flex="100">' +
                     '<a class="md-button md-warn" ng-click="remove_patreon(patreon);">Borrar patrocinador</a>' +
-                    '<input class="md-button md-primary md-raised" type="submit" value="Guardar nuevo patrocinador">' +
+                    '<input class="md-button md-primary md-raised" type="submit" value="Guardar patrocinador">' +
                 '</div>' +
             '</form>' +
         '</div>' +
