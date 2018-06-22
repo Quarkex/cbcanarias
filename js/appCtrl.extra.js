@@ -58,6 +58,24 @@ app.controller("patreonsCtrl", function($rootScope, $scope, patreons) {
     $rootScope['patreons_status'] = patreons.element_status;
 });
 
+app.service('patreonsFooter', ["language", "$resource", ResourcePaginator]);
+app.controller("patreonsFooterCtrl", function($rootScope, $scope, patreonsFooter) {
+
+    patreonsFooter.expose_interface($scope);
+
+    patreonsFooter.set_values({
+        "language": '',
+        "pub": false,
+        "collection": "patreons",
+        "filters": {"in_footer": true},
+        "values": [ "name", "link", "weight" ],
+        "offset": 0,
+        "limit": 0
+    });
+
+    $rootScope['patreons_footer_status'] = patreonsFooter.element_status;
+});
+
 app.service('patreonsScroll', ["language", "$resource", ResourcePaginator]);
 app.controller("patreonsScrollCtrl", function($rootScope, $scope, patreonsScroll) {
 
