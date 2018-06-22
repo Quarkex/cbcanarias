@@ -24,11 +24,39 @@ app.directive('appFooter', function () {
     ];
 
     var footer_string = '';
+    var footer_patreons_string = '';
     var footer_logo_string = '';
     var footer_dialogs_string = '';
     var footer_left_string = '';
     var footer_center_string = '';
     var footer_right_string = '';
+
+    footer_patreons_string = '<img ' + [
+        'ng-src="/img/patreons/{{ patreon.name | slugify }}.png"',
+        'alt="{{ patreon.name }}"'
+    ].join(' ') + '>';
+
+    footer_patreons_string = '<a ' + [
+        'ng-href="{{ patreon.link }}"'
+    ].join(' ') + '>' + footer_patreons_string  + '</a>';
+
+    footer_patreons_string = '<div ' + [
+        'flex="100"',
+        'flex-gt-sm="50"',
+        'flex-gt-md="25"',
+        'class="column centered"',
+        'ng-repeat="patreon in elements() | orderBy: \'weight\'"'
+    ].join(' ') + '>' + footer_patreons_string  + '</div>';
+
+    footer_patreons_string = '<div ' + [
+        'class="patreons-footer"',
+        'flex="100"',
+        'layout="row"',
+        'layout-wrap',
+        'layout-padding',
+        'layout-align="center center"',
+        'ng-controller="patreonsFooterCtrl"'
+    ].join(' ') + '>' + footer_patreons_string  + '</div>';
 
     var i = 0;
     var dialogs_length = 0;
@@ -71,7 +99,7 @@ app.directive('appFooter', function () {
 
     footer_string = footer_left_string + footer_center_string + footer_right_string;
     footer_string = '<div flex layout="column" layout-gt-sm="row" layout-padding>' + footer_string + '</div>';
-    footer_string = '<div ng-controller="footerCtrl" class="footer-wrapper hide-for-print" layout="column" flex>' + footer_logo_string + footer_dialogs_string + footer_string + '</div>';
+    footer_string = '<div ng-controller="footerCtrl" class="footer-wrapper hide-for-print" layout="column" flex>' + footer_patreons_string + footer_logo_string + footer_dialogs_string + footer_string + '</div>';
 
 
     template = footer_string;
