@@ -1,6 +1,6 @@
 ---
 title: "Tienda"
 id: "tienda"
-position: "right"
+position: "hidden"
 href: "https://cbcanariasstore.com/index.php"
 ---
