@@ -53,6 +53,8 @@ begin
             $in_page = (cgi[param] == 'true')     if cgi[param] != nil and cgi[param] != ''
         when "in_footer"
             $in_footer = (cgi[param] == 'true')   if cgi[param] != nil and cgi[param] != ''
+        when "featured"
+            $featured = (cgi[param] == 'true')    if cgi[param] != nil and cgi[param] != ''
         when "scrolleable"
             $scrolleable = (cgi[param] == 'true') if cgi[param] != nil and cgi[param] != ''
         when "link"
@@ -74,6 +76,7 @@ begin
     $patreon['weight']      = $weight
     $patreon['in_footer']   = $in_footer
     $patreon['in_page']     = $in_page
+    $patreon['featured']    = $in_page
     $patreon['scrolleable'] = $scrolleable
     $patreon['link']        = $link
 

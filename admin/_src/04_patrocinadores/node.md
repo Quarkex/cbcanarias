@@ -2,8 +2,8 @@
 id: "patrocinadores"
 title: "Patrocinadores"
 collection: "patreons"
-values_list: [ "name", "type", "link", "ID", "in_footer", "in_page", "scrolleable", "weight" ]
-values_view: [ "name", "type", "link", "ID", "in_footer", "in_page", "scrolleable", "weight" ]
+values_list: [ "name", "type", "link", "ID", "featured", "in_footer", "in_page", "scrolleable", "weight" ]
+values_view: [ "name", "type", "link", "ID", "featured", "in_footer", "in_page", "scrolleable", "weight" ]
 view: "patreon-editor"
 pub: false
 ---
