@@ -6,6 +6,9 @@
 if [[ ! -d img ]]; then
     mkdir img;
 fi
+if [[ ! -d img/articles ]]; then
+    mkdir img/articles;
+fi
 if [[ ! -d files ]]; then
     mkdir files;
 fi
@@ -17,14 +20,20 @@ else
     if [[ -f _site ]]; then
         mv _site _site.bak;
         mkdir _site;
+        ln -s ../files _site/files
+        ln -s ../img _site/img
     fi
-    if [[ -d _site/files ]]; then
+    if [[ ! -L _site/files ]]; then
         rsync -r _site/files/ files/
+        mv _site/files _site/files.bak
+        ln -s ../files _site/files
     fi
-    if [[ -d _site/img ]]; then
+    if [[ ! -L _site/img ]]; then
         rsync -r _site/img/ img/
+        mv _site/img _site/img.bak
+        ln -s ../img _site/img
     fi
-    find _site -links 1 -exec rm "{}" \; ;
+    #find _site -links 1 -exec rm "{}" \; ;
 fi
 
 # compile the navigation tree
