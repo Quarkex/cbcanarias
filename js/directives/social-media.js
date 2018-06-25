@@ -1,6 +1,6 @@
 app.directive('appSocialMedia', function () {
 
-    var template = '' + //'<h2>Redes</h2>' +
+    var template = '<h1></h1>' +
     '<div flex="100" layout="column" layout-gt-md="row" layout-wrap>' +
         '<div flex="100" flex-gt-md="65">' +
             '<div class="flex-video"><iframe src="http://www.youtube.com/embed/?listType=user_uploads&list=Canarias1939" width="480" height="400"></iframe></div>' +
