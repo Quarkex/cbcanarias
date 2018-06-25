@@ -35,6 +35,12 @@ app.directive('appArticleEditorView', function () {
                                         '</md-button>' +
                                     '</md-menu-item>' +
 
+                                    '<md-menu-item>' +
+                                        '<md-button ng-click="toolbar.changeHref(article, $event)">' +
+                                            'Modificar enlace externo' +
+                                        '</md-button>' +
+                                    '</md-menu-item>' +
+
                                 '</md-menu-content>' +
                             '</md-menu>' +
 
@@ -101,6 +107,7 @@ app.directive('appArticleEditorView', function () {
                     '<input type="hidden" name="video" value="{{ article.video }}">' +
                     '<input type="hidden" name="id" value="{{ article.id }}">' +
                     '<input type="hidden" name="content" value="{{ article.content }}">' +
+                    '<input type="hidden" name="href" value="{{ article.href }}">' +
                 '</div>' +
                 '<div layout="row" flex="100" layout-align="center">' +
                     '<span ng-click="toolbar.changeDate(article, $event)">{{ article.date | date }}</span>' +

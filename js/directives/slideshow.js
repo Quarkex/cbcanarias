@@ -7,7 +7,10 @@ app.directive('appSlideshow', function () {
                '<div class="orbit-slider" ng-repeat="item in elements()">' +
                    '<div bind-html-compile="item.figure"></div>' +
                    '<figcaption class="orbit-caption">' +
-                       '<span>{{ item.title.lenght > 60 ? ( item.title | limitTo: 59 ) + \'…\' : item.title }}<br><a href="#!/{{ lang() }}/noticias/{{ item.id }}">Leer más…</a></span>' +
+                       '<span>{{ item.title.lenght > 60 ? ( item.title | limitTo: 59 ) + \'…\' : item.title }}<br>' +
+                       '<a ng-if="item.href == null" ng-href="#!/{{ lang() }}/noticias/{{ item.id }}">Leer más…</a>' +
+                       '<a ng-if="item.href != null" ng-href="{{ item.href }}">Leer más…</a>' +
+                       '</span>' +
                    '</figcaption>' +
                '</div>' +
            '</slick>' +

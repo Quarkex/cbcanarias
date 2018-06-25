@@ -2,8 +2,8 @@
 id: "noticias"
 title: "Noticias"
 collection: "articles"
-values_view: [ "id", "title", "figure", "excerpt", "content", "date", "published", "slider", "showcaser", "event" ]
-values_list: [ "id", "title", "figure", "excerpt", "content", "date", "published", "slider", "showcaser", "event" ]
+values_view: [ "id", "title", "figure", "excerpt", "content", "date", "published", "slider", "showcaser", "event", "href" ]
+values_list: [ "id", "title", "figure", "excerpt", "content", "date", "published", "slider", "showcaser", "event", "href" ]
 view: "article-editor"
 pub: false
 limit: 20
@@ -45,6 +45,12 @@ limit: 20
                                                 <md-menu-item>
                                                     <md-button ng-click="toolbar.changeDate(article, $event)">
                                                         Modificar fecha
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                                <md-menu-item>
+                                                    <md-button ng-click="toolbar.changeHref(article, $event)">
+                                                        Modificar enlace externo
                                                     </md-button>
                                                 </md-menu-item>
 
@@ -113,6 +119,7 @@ limit: 20
                                 <input type="hidden" name="showcaser" value="{{ article.showcaser }}">
                                 <input type="hidden" name="video" value="{{ article.video }}">
                                 <input type="hidden" name="content" value="{{ article.content }}">
+                                <input type="hidden" name="href" value="{{ article.href }}">
                             </div>
                             <div layout="row" flex="100" layout-align="center">
                                 <span ng-click="toolbar.changeDate(article, $event)">{{ article.date | date }}</span>

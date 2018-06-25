@@ -401,6 +401,21 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
                 item.excerpt = result;
             }, function(result){});
         },
+        changeHref: function(item, ev){
+            var confirm = $mdDialog.prompt()
+                .title('Modificar enlace externo')
+                .textContent('Introduzca la dirección asignada al artículo.')
+                .placeholder('https://www.ejemplo.es')
+                .ariaLabel('Enlace del artículo')
+                .initialValue('')
+                .targetEvent(ev)
+                .ok('Modificar')
+                .cancel('Cancelar');
+
+            $mdDialog.show(confirm).then(function(result) {
+                item.href = result;
+            }, function(result){});
+        },
         changeDate: function(item, ev){
             var confirm = $mdDialog.prompt()
                 .title('Modificar fecha')

@@ -104,7 +104,7 @@ app.controller("slideshowCtrl", function($rootScope, $scope, slideshow) {
         "pub": false,
         "collection": "articles",
         "filters": {"slider": true, "published": true},
-        "values": [ "video", "figure", "id", "title", "date", "excerpt" ],
+        "values": [ "video", "figure", "id", "title", "date", "excerpt", "href" ],
         "offset": 0,
         "limit": 5
     });
@@ -123,7 +123,7 @@ app.controller("showcaseCtrl", function($rootScope, $scope, showcase) {
         "pub": false,
         "collection": "articles",
         "filters": {"showcaser": true, "published": true},
-        "values": [ "figure", "id", "title", "date", "excerpt" ],
+        "values": [ "figure", "id", "title", "date", "excerpt", "href" ],
         "offset": 0,
         "limit": 5
     });
@@ -142,7 +142,7 @@ app.controller("posterCtrl", function($rootScope, $scope, poster) {
         "pub": false,
         "collection": "articles",
         "filters": {'event': true, "published": true},
-        "values": ["id","figure", "title"],
+        "values": ["id","figure", "title", "href"],
         "offset": 0,
         "limit": 1
     });

@@ -88,6 +88,10 @@ begin
         $doc['content'] = cgi['content'] unless cgi['content'] == ""
     end
 
+    if cgi.params.has_key? 'href' then
+        $doc['href'] = ( cgi['href'] == "" or cgi['href'].nil? ) ? nil : cgi['href']
+    end
+
     if cgi.params.has_key? 'article_image' then
         cgi.params["article_image"].each do |file|
             sha1 = Digest::SHA1.file file

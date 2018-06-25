@@ -7,13 +7,15 @@ app.directive('appArticleShowcaser', function () {
                 '<figure bind-html-compile="article.figure"></figure>' +
                 '<div style="height: 150px; overflow-y: hidden;">' +
                     '<header>' +
-                        '<h6><a href="#!/{{ lang() }}/noticias/{{ article.id }}">{{ article.title }}</a></h6>' +
+                        '<h6 ng-if="article.href == null"><a ng-href="#!/{{ lang() }}/noticias/{{ article.id }}">{{ article.title }}</a></h6>' +
+                        '<h6 ng-if="article.href != null"><a ng-href="{{ article.href }}">{{ article.title }}</a></h6>' +
                     '</header>' +
                 '</div>' +
                 '<small flex="5"><date>{{ article.date | date : translate(\'date.schema\') }}</date></small>' +
                 '<div flex="70" bind-html-compile="article.excerpt"></div>' +
                 '<footer flex="5">' +
-                    '<a href="#!/{{ lang() }}/noticias/{{ article.id }}">leer más</a>' +
+                    '<a ng-if="article.href == null" ng-href="#!/{{ lang() }}/noticias/{{ article.id }}">leer más</a>' +
+                    '<a ng-if="article.href != null" ng-href="{{ article.href }}">leer más</a>' +
                     '<br>' +
                 '</footer>' +
             '</article>' +
