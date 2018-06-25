@@ -14,7 +14,7 @@
     </div>
     <!--
     <div layout="row" layout-padding>
-        <app-patreon-slider flex="100"></app-patreon-slider>
+        <app-patreons flex="100"></app-patreons>
     </div>
     -->
     <div layout="row" layout-padding>
