@@ -1,14 +1,6 @@
 ---
 title: "Todas las noticias"
 id: "todas_las_noticias"
-view: "article"
-"language": true
-"collection": "articles"
-"filters": {"published": true}
-"values_view": ["video","image","figure","id","title","date","content"]
-"values_list": ["video","image","figure","id","title","date","excerpt"]
-"limit": 10
-"pub": false
 ---
 <div class="page news-list" layout="column" layout-margin>
     <h1>Noticias</h1>
