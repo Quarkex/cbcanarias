@@ -45,6 +45,7 @@ app.directive('appFooter', function () {
         'flex-gt-sm="50"',
         'flex-gt-md="25"',
         'class="column centered"',
+        'ng-if="sections()[sections().length -1] != \'patrocinadores\'"',
         'ng-repeat="patreon in elements() | orderBy: \'weight\'"'
     ].join(' ') + '>' + footer_patreons_string  + '</div>';
 
