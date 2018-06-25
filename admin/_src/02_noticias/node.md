@@ -54,6 +54,12 @@ limit: 20
                                                     </md-button>
                                                 </md-menu-item>
 
+                                                <md-menu-item>
+                                                    <md-button ng-click="toolbar.changeVideo($event)">
+                                                        Modificar vídeo
+                                                    </md-button>
+                                                </md-menu-item>
+
                                             </md-menu-content>
                                         </md-menu>
 
@@ -74,31 +80,6 @@ limit: 20
                                             </md-menu-content>
                                         </md-menu>
 
-                                        <md-menu>
-                                            <button ng-click="$mdMenu.open()">
-                                                Archivos
-                                            </button>
-                                            <md-menu-content width="3">
-
-                                                <md-menu-item>
-                                                    <md-button ng-click="toolbar.changeVideo($event)">
-                                                        Modificar vídeo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-divider></md-menu-divider>
-                                                <md-menu-item>
-                                                    <span style="white-space: nowrap;">Imagen: <input name="article_image" type="file"></span>
-                                                </md-menu-item>
-
-                                                <md-menu-divider></md-menu-divider>
-                                                <md-menu-item>
-                                                    <span style="white-space: nowrap;">Poster: <input name="event_image" type="file"></span>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-
                                     </md-menu-bar>
 
                                 </div>
@@ -106,6 +87,14 @@ limit: 20
                             </div>
                         </md-toolbar>
                         <div flex layout="row" layout-wrap>
+                            <div layout="row" flex="100" layout-align="center">
+                                <div flex="50">
+                                    <span style="white-space: nowrap;">Imagen: <input name="article_image" type="file"></span>
+                                </div>
+                                <div flex="50">
+                                    <span style="white-space: nowrap;">Poster: <input name="event_image" type="file"></span>
+                                </div>
+                            </div>
                             <div layout="row" flex="100">
                                 <div style="min-height: 50vh; width: 100%; padding: 1em;" class="article-content md-whiteframe-1dp" ng-model="article.content" ckeditor="ckOptions" ready="onReady()" contenteditable="true"></div>
                                 <input type="hidden" name="title" value="{{ article.title }}">
