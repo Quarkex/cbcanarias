@@ -76,7 +76,7 @@ begin
     $patreon['weight']      = $weight
     $patreon['in_footer']   = $in_footer
     $patreon['in_page']     = $in_page
-    $patreon['featured']    = $in_page
+    $patreon['featured']    = $featured
     $patreon['scrolleable'] = $scrolleable
     $patreon['link']        = $link
 
