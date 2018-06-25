@@ -407,7 +407,7 @@ app.controller("mainCtrl", function( $mdMenu, $http, $location, $mdDialog, $reso
                 .textContent('Introduzca la dirección asignada al artículo.')
                 .placeholder('https://www.ejemplo.es')
                 .ariaLabel('Enlace del artículo')
-                .initialValue('')
+                .initialValue(item.href)
                 .targetEvent(ev)
                 .ok('Modificar')
                 .cancel('Cancelar');
